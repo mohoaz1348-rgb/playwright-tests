@@ -36,6 +36,7 @@ jobs:
         with:
           name: allure-results
           path: results/allure-results
+          retention-days: 1
 
   publish-report:
     runs-on: ubuntu-latest
@@ -89,6 +90,10 @@ jobs:
             "buildName": "#'${CURRENT_RUN}'",
             "buildUrl": "https://github.com{{ github.repository }}/actions/runs/${{ github.run_id }}"
           }' > allure-results/executor.json
+          
+          # Чистим старье (оставляем 20 папок)
+          ls -d gh-pages/*/ 2>/dev/null | grep -E '/[0-9]+/$' | sort -V | head -n -20 | xargs rm -rf || true
+
           # 4. Генерируем новый отчет в папку с номером текущего запуска
           # Мы создаем папку внутри gh-pages, чтобы деплой отправил всё разом
           allure generate allure-results --clean -o gh-pages/$CURRENT_RUN
