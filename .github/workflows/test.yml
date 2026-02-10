@@ -78,7 +78,16 @@ jobs:
             cp -r gh-pages/$PREVIOUS_RUN/history/* allure-results/history/
             echo "History from run $PREVIOUS_RUN copied."
           fi
-          
+          # ДОБАВЛЯЕМ executor.json (Чтобы на графике появились номера билдов)
+          echo '{
+            "name": "GitHub Actions",
+            "type": "github",
+            "reportName": "UI Tests Report",
+            "url": "https://github.com{{ github.repository }}",
+            "buildOrder": '${CURRENT_RUN}',
+            "buildName": "#'${CURRENT_RUN}'",
+            "buildUrl": "https://github.com{{ github.repository }}/actions/runs/${{ github.run_id }}"
+          }' > allure-results/executor.json
           # 4. Генерируем новый отчет в папку с номером текущего запуска
           # Мы создаем папку внутри gh-pages, чтобы деплой отправил всё разом
           allure generate allure-results --clean -o gh-pages/$CURRENT_RUN
