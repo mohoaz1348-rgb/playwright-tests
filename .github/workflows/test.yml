@@ -85,7 +85,7 @@ jobs:
             "name": "GitHub Actions",
             "type": "github",
             "reportName": "UI Tests Report",
-            "url": "https://github.com{{ github.repository }}",
+            "url": "https://github.com/${{ github.repository }}",
             "buildOrder": '${CURRENT_RUN}',
             "buildName": "#'${CURRENT_RUN}'",
             "buildUrl": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
