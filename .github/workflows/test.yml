@@ -99,7 +99,8 @@ jobs:
           allure generate allure-results --clean -o gh-pages/$CURRENT_RUN
           
           # 5. Создаем или обновляем корневой index.html для редиректа на последний отчет
-          echo "<!DOCTYPE html><html><head><meta http-equiv='refresh' content='0; url=$CURRENT_RUN/'></head><body>Redirecting to latest report...</body></html>" > gh-pages/index.html
+          #echo "<!DOCTYPE html><html><head><meta http-equiv='refresh' content='0; url=$CURRENT_RUN/'></head><body>Redirecting to latest report...</body></html>" > gh-pages/index.html
+          echo "<!DOCTYPE html><meta charset="utf-8"><meta http-equiv="refresh" content='0; URL=$CURRENT_RUN/'><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">" > gh-pages/index.html
 
       - name: Deploy report to Github Pages
         if: always()
