@@ -1,0 +1,1 @@
+[{"name":"GitHub Actions","type":"github","url":"https://github.com{{ github.repository }}","buildOrder":16,"buildName":"#16","buildUrl":"https://github.com/mohoaz1348-rgb/playwright-tests/actions/runs/22015623240","reportName":"UI Tests Report"}]
