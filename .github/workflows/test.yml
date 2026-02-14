@@ -67,19 +67,28 @@ jobs:
           allure --version
       
       - name: Generate Report
+        env:
+            RUN_NUM=${{ github.run_number }}
         run: |
           # 1. Определяем номера запусков
-          CURRENT_RUN=${{ github.run_number }}
-          PREVIOUS_RUN=$((CURRENT_RUN - 1))
+          CURRENT_RUN=$RUN_NUM
+          LATEST_HISTORY_PATH=$(ls -d gh-pages/*/ 2>/dev/null | grep -E '/[0-9]+/$' | sort -V | tail -n 1)
+          #PREVIOUS_RUN=$((CURRENT_RUN - 1))
           
           # 2. Подготавливаем папку для истории в новых результатах
           mkdir -p allure-results/history
           
-          # 3. Копируем историю из ПРЕДЫДУЩЕЙ папки (если она есть в gh-pages)
-          if [ -d "gh-pages/$PREVIOUS_RUN/history" ]; then
-            cp -r gh-pages/$PREVIOUS_RUN/history/* allure-results/history/
-            echo "History from run $PREVIOUS_RUN copied."
+          if [ -n "$LATEST_HISTORY_PATH" ] && [ -d "${LATEST_HISTORY_PATH}history" ]; then
+            echo "Found history in $LATEST_HISTORY_PATH. Copying..."
+            cp -r ${LATEST_HISTORY_PATH}history/* allure-results/history/
+          else
+            echo "No previous history found in any folder."
           fi
+          # 3. Копируем историю из ПРЕДЫДУЩЕЙ папки (если она есть в gh-pages)
+          #if [ -d "gh-pages/$PREVIOUS_RUN/history" ]; then
+          #  cp -r gh-pages/$PREVIOUS_RUN/history/* allure-results/history/
+          #  echo "History from run $PREVIOUS_RUN copied."
+          #fi
           # ДОБАВЛЯЕМ executor.json (Чтобы на графике появились номера билдов)
           echo '{
             "name": "GitHub Actions",
