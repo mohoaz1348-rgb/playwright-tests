@@ -68,7 +68,7 @@ jobs:
       
       - name: Generate Report
         env:
-            RUN_NUM=${{ github.run_number }}
+          RUN_NUM: ${{ github.run_number }}
         run: |
           # 1. Определяем номера запусков
           CURRENT_RUN=$RUN_NUM
