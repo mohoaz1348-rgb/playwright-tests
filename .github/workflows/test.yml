@@ -89,9 +89,9 @@ jobs:
             "buildOrder": '${CURRENT_RUN}',
             "buildName": "#'${CURRENT_RUN}'",
             "buildUrl": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            "reportUrl": "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${CURRENT_RUN}/"
+            "reportUrl": "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/'${CURRENT_RUN}'/"
           }' > allure-results/executor.json
-          
+     
           # Чистим старье (оставляем 20 папок)
           ls -d gh-pages/*/ 2>/dev/null | grep -E '/[0-9]+/$' | sort -V | head -n -20 | xargs rm -rf || true
 
