@@ -1,1 +1,0 @@
-[{"name":"GitHub Actions","type":"github","url":"https://github.com{{ github.repository }}","buildOrder":12,"buildName":"#12","buildUrl":"https://github.com{{ github.repository }}/actions/runs/21875277671","reportName":"UI Tests Report"}]
