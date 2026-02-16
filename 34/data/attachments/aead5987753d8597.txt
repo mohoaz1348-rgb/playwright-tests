@@ -1,0 +1,13 @@
+INFO     BASE_PAGE:base_page.py:17 Opening the URL - "javascript_alerts"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "//button[contains(text(),"Alert")]" for button at index 0
+INFO     BASE_ELEMENT:base_element.py:44 Clicking button with name "some button"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "#result" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:76 Checking that base element "result" contain text "success"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "//button[contains(text(),"Confirm")]" for button at index 0
+INFO     BASE_ELEMENT:base_element.py:44 Clicking button with name "some button"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "#result" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:76 Checking that base element "result" contain text "Cancel"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "//button[contains(text(),"Prompt")]" for button at index 0
+INFO     BASE_ELEMENT:base_element.py:44 Clicking button with name "some button"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "#result" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:76 Checking that base element "result" contain text "Ahaha!"
