@@ -1,12 +1,12 @@
 name: UI tests
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  #push:
+  #  branches:
+  #    - main
+  #pull_request:
+  #  branches:
+  #    - main
   workflow_dispatch:
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run UI tests with pytest and generate Allure results
         run: |
-          uv run pytest -m debug
+          uv run pytest
 
       - name: Upload Allure results
         if: always()
