@@ -64,7 +64,6 @@ jobs:
         run: |
           mkdir -p results
           docker run \
-            #-u $(id -u):$(id -g) \
             -v ${{ github.workspace }}/results:/app/results:rw \
             --rm \
             ghcr.io/${{ github.repository }}:latest \
