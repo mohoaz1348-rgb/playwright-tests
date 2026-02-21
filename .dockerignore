@@ -18,6 +18,7 @@ ENV/
 .uv/
 
 # Логи и отчеты тестов
+results
 /test-results/
 /screenshots/
 /video/
@@ -28,6 +29,7 @@ htmlcov/
 
 # Гит и системные файлы
 .git
+.github
 .gitignore
 .DS_Store
 .vscode/
