@@ -1,6 +1,7 @@
 import shutil
 import sys
 import pytest
+import os
 import subprocess
 from pathlib import Path
 
@@ -10,6 +11,7 @@ def run_tests():
     results_dir = Path("results")
     if results_dir.exists():
         shutil.rmtree(results_dir)
+    results_dir.mkdir(exist_ok=True)
 
     # Установка браузеров (uv run чтобы не заходить в venv)
     # Если браузеры есть, это пройдет мгновенно
@@ -23,9 +25,20 @@ def run_tests():
     serve_report = "--no-serve" not in args
     if not serve_report:
         args.remove("--no-serve")
+        
+    #docker build -t playwright-uv . 
+    subprocess.run(["docker", "build", "-t", "playwright-uv", "."])
+    #docker run -u $(id -u):$(id -g) -v $(pwd)/results:/app/results:rw --rm playwright-uv
+    current_dir = os.getcwd()
 
-    # Теперь Pytest получит только те флаги, которые он понимает
-    exit_code = pytest.main(args)
+    command = (
+        f"docker run -u $(id -u):$(id -g) "
+        f"-v {current_dir}/results:/app/results:rw "
+        f"--rm playwright-uv:latest uv run pytest {' '.join(args)}"
+    )
+
+    print("Запуск тестов в Docker...")
+    result = subprocess.run(command, shell=True, check=True, text=True)
 
     # Используем наш параметр запуска тестов для логики Allure
     allure_results = results_dir / "allure-results"
@@ -40,7 +53,8 @@ def run_tests():
         except Exception as e:
             print(f"\n[ERROR] Не удалось запустить Allure: {e}")
 
-    sys.exit(exit_code)
+    #sys.exit(exit_code)
+    sys.exit(result.returncode)
 
 
 if __name__ == "__main__":

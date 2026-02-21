@@ -1,0 +1,155 @@
+name: UI tests - Docker
+
+on:
+  #push:
+  #  branches: [ main ] # Собираем при пуше в основную ветку
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: actions/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          # Кэширование слоев для ускорения сборки
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  run-tests:
+    needs: build-and-push # Запускать только если сборка прошла успешно
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Playwright tests in Docker
+        run: |
+          mkdir -p results
+          docker run \
+            -u $(id -u):$(id -g) \
+            -v ${{ github.workspace }}/results:/app/results:rw \
+            --rm \
+            ghcr.io/${{ github.repository }}:latest \
+            uv run pytest -m debug
+
+      - name: Upload Allure Results # Сохраняем отчеты как артефакты GitHub
+        if: always() # Запускать даже если тесты упали
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: results/allure-results
+          retention-days: 1
+
+  publish-report:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: always()
+    needs: [ run-tests ]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Download Allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Install Allure CLI
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.36.0/allure-2.36.0.tgz
+          tar -zxf allure-2.36.0.tgz
+          sudo mv allure-2.36.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+          allure --version
+      
+      - name: Generate Report
+        env:
+          RUN_NUM: ${{ github.run_number }}
+        run: |
+          # 1. Определяем номера запусков
+          CURRENT_RUN=$RUN_NUM
+          LATEST_HISTORY_PATH=$(ls -d gh-pages/*/ 2>/dev/null | grep -E '/[0-9]+/$' | sort -V | tail -n 1)
+          
+          # 2. Подготавливаем папку для истории в новых результатах
+          mkdir -p allure-results/history
+          
+          if [ -n "$LATEST_HISTORY_PATH" ] && [ -d "${LATEST_HISTORY_PATH}history" ]; then
+            echo "Found history in $LATEST_HISTORY_PATH. Copying..."
+            cp -r ${LATEST_HISTORY_PATH}history/* allure-results/history/
+          else
+            echo "No previous history found in any folder."
+          fi
+
+          # ДОБАВЛЯЕМ executor.json (Чтобы на графике появились номера билдов)
+          echo '{
+            "name": "GitHub Actions",
+            "type": "github",
+            "reportName": "UI Tests Report",
+            "url": "https://github.com/${{ github.repository }}",
+            "buildOrder": '${CURRENT_RUN}',
+            "buildName": "#'${CURRENT_RUN}'",
+            "buildUrl": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            "reportUrl": "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/'${CURRENT_RUN}'/"
+          }' > allure-results/executor.json
+          
+          cat allure-results/executor.json
+          
+          # Чистим старье (оставляем 20 папок)
+          ls -d gh-pages/*/ 2>/dev/null | grep -E '/[0-9]+/$' | sort -V | head -n -20 | xargs rm -rf || true
+
+          # 4. Генерируем новый отчет в папку с номером текущего запуска
+          # Мы создаем папку внутри gh-pages, чтобы деплой отправил всё разом
+          allure generate allure-results --clean -o gh-pages/$CURRENT_RUN
+          
+          # 5. Создаем или обновляем корневой index.html для редиректа на последний отчет
+          #echo "<!DOCTYPE html><html><head><meta http-equiv='refresh' content='0; url=$CURRENT_RUN/'></head><body>Redirecting to latest report...</body></html>" > gh-pages/index.html
+          echo "<!DOCTYPE html><meta charset="utf-8"><meta http-equiv="refresh" content='0; URL=$CURRENT_RUN/'><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">" > gh-pages/index.html
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: gh-pages  # Пушим всю папку, включая все прошлые отчеты и новый index.html
+
+

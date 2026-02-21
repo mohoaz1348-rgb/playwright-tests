@@ -3,7 +3,7 @@ name = "playwright-tests"
 version = "0.1.0"
 description = "Автоматизация тестирования с Playwright и Allure"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 dependencies = [
     "pytest>=8.0.0",
     "playwright>=1.40.0",

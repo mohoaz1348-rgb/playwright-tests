@@ -12,7 +12,7 @@ if __name__ == "__main__":
 
     # Проверяем и устанавливаем браузеры (playwright сделает это быстро, если они уже есть)
     # Используем "uv run", чтобы не привязываться к окружению
-    subprocess.run(["uv", "run", "playwright", "install", "chromium"])
+    # subprocess.run(["uv", "run", "playwright", "install", "chromium"])
 
     # Запуск pytest с передачей всех аргументов из командной строки
     sys.exit(pytest.main(sys.argv[1:]))
