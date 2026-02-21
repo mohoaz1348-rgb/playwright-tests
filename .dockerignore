@@ -1,39 +1,29 @@
 # Сборки и кэш Python
-__pycache__/
+__pycache__
 *.py[cod]
 *$py.class
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+.pytest_cache
+.mypy_cache
+.ruff_cache
 
 # Виртуальные окружения (uv создаст своё внутри образа)
-.venv/
-venv/
-ENV/
-
-# Локальные браузеры Playwright (в образе они уже есть в /ms-playwright)
-.local-browsers/
+.venv
+venv
+ENV
 
 # Данные uv
-.uv/
+.uv
 
 # Логи и отчеты тестов
 results
-/test-results/
-/screenshots/
-/video/
-.allure_results/
-allure-results/
-htmlcov/
-.coverage
 
 # Гит и системные файлы
 .git
 .github
 .gitignore
 .DS_Store
-.vscode/
-.idea/
+.vscode
+.idea
 
 # Докер файлы
 Dockerfile

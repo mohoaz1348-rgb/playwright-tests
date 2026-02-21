@@ -5,7 +5,7 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --python-preference only-system
 COPY . .
-RUN chmod -R 777 /app
+#RUN chmod -R 777 /app
 #CMD ["uv", "run", "pytest", "-m", "debug"]
 
 
