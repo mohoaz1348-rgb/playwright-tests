@@ -114,6 +114,7 @@ def test_download_link(base_page: BasePage):
     dl_link.download()
 
 
+@pytest.mark.debug
 @allure.title("upload")
 def test_upload(base_page: BasePage):
     base_page.visit("upload")
@@ -225,7 +226,6 @@ def test_hover(base_page: BasePage):
         base_page.check_current_url(re.compile(f".*{link_href}"))
 
 
-@pytest.mark.debug
 @allure.title("jquery menu")
 def test_jquery_menu(base_page: BasePage):
     base_page.visit("jqueryui/menu")
