@@ -1,7 +1,0 @@
-INFO     BASE_PAGE:base_page.py:17 Opening the URL - "upload"
-INFO     UPLOAD:file_upload.py:17 Uploading file "for_upload/test_upload.txt" ...
-INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "input#file-upload" for file uploader at index 0
-INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "input#file-submit" for button at index 0
-INFO     BASE_ELEMENT:base_element.py:44 Clicking button with name "Upload"
-INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "div#uploaded-files" for base element at index 0
-INFO     BASE_ELEMENT:base_element.py:60 Checking that base element "Uploaded Files" is visible
