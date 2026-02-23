@@ -85,6 +85,9 @@ jobs:
     needs: [ run-tests ]
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Generate Report
         uses: ./.github/actions/allure-rep
 
