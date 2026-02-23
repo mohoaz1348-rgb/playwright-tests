@@ -1,0 +1,3 @@
+INFO     BASE_PAGE:base_page.py:17 Opening the URL - "typos"
+INFO     BASE_ELEMENT:base_element.py:124 Spell checking text of base element "body"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "body" for base element at index 0
