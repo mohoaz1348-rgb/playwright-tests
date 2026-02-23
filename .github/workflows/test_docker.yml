@@ -76,6 +76,7 @@ jobs:
           path: results/allure-results
           retention-days: 1
 
+
   publish-report:
     runs-on: ubuntu-latest
     permissions:
@@ -84,75 +85,6 @@ jobs:
     needs: [ run-tests ]
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Download Allure results
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results
-          path: allure-results
-
-      - name: Install Allure CLI
-        run: |
-          wget https://github.com/allure-framework/allure2/releases/download/2.36.0/allure-2.36.0.tgz
-          tar -zxf allure-2.36.0.tgz
-          sudo mv allure-2.36.0 /opt/allure
-          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
-          allure --version
-      
       - name: Generate Report
-        env:
-          RUN_NUM: ${{ github.run_number }}
-        run: |
-          # 1. Определяем номера запусков
-          CURRENT_RUN=$RUN_NUM
-          LATEST_HISTORY_PATH=$(ls -d gh-pages/*/ 2>/dev/null | grep -E '/[0-9]+/$' | sort -V | tail -n 1)
-          
-          # 2. Подготавливаем папку для истории в новых результатах
-          mkdir -p allure-results/history
-          
-          if [ -n "$LATEST_HISTORY_PATH" ] && [ -d "${LATEST_HISTORY_PATH}history" ]; then
-            echo "Found history in $LATEST_HISTORY_PATH. Copying..."
-            cp -r ${LATEST_HISTORY_PATH}history/* allure-results/history/
-          else
-            echo "No previous history found in any folder."
-          fi
-
-          # ДОБАВЛЯЕМ executor.json (Чтобы на графике появились номера билдов)
-          echo '{
-            "name": "GitHub Actions",
-            "type": "github",
-            "reportName": "UI Tests Report",
-            "url": "https://github.com/${{ github.repository }}",
-            "buildOrder": '${CURRENT_RUN}',
-            "buildName": "#'${CURRENT_RUN}'",
-            "buildUrl": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-            "reportUrl": "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/'${CURRENT_RUN}'/"
-          }' > allure-results/executor.json
-          
-          cat allure-results/executor.json
-          
-          # Чистим старье (оставляем 20 папок)
-          ls -d gh-pages/*/ 2>/dev/null | grep -E '/[0-9]+/$' | sort -V | head -n -20 | xargs rm -rf || true
-
-          # 4. Генерируем новый отчет в папку с номером текущего запуска
-          # Мы создаем папку внутри gh-pages, чтобы деплой отправил всё разом
-          allure generate allure-results --clean -o gh-pages/$CURRENT_RUN
-          
-          # 5. Создаем или обновляем корневой index.html для редиректа на последний отчет
-          #echo "<!DOCTYPE html><html><head><meta http-equiv='refresh' content='0; url=$CURRENT_RUN/'></head><body>Redirecting to latest report...</body></html>" > gh-pages/index.html
-          echo "<!DOCTYPE html><meta charset="utf-8"><meta http-equiv="refresh" content='0; URL=$CURRENT_RUN/'><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">" > gh-pages/index.html
-
-      - name: Deploy report to Github Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: gh-pages  # Пушим всю папку, включая все прошлые отчеты и новый index.html
-
+        uses: ./.github/actions/allure-rep
 
