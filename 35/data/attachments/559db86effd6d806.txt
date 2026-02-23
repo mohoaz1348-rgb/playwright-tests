@@ -1,0 +1,12 @@
+INFO     BASE_PAGE:base_page.py:17 Opening the URL - "drag_and_drop"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "#column-a" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:68 Checking that base element "A-block" have text "A"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "#column-b" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:68 Checking that base element "B-block" have text "B"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "#column-b" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:98 Dragging base element "A-block" to the element with locator "<Locator frame=<Frame name= url='https://the-internet.herokuapp.com/drag_and_drop'> selector='#column-b >> nth=0'>"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "#column-a" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "#column-a" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:68 Checking that base element "A-block" have text "B"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "#column-b" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:68 Checking that base element "B-block" have text "A"

@@ -1,0 +1,7 @@
+INFO     BASE_PAGE:base_page.py:17 Opening the URL - "horizontal_slider"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "input[type="range"]" for slider at index 0
+INFO     SLIDER:slider.py:19 Filling slider "Slider" with value 4.5
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "input[type="range"]" for slider at index 0
+INFO     INPUT:input.py:29 Checking that slider "Slider" have the value "4.5"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "span#range" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:68 Checking that base element "Span" have text "4.5"

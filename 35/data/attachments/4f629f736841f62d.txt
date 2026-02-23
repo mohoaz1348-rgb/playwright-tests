@@ -1,0 +1,4 @@
+INFO     BASE_PAGE:base_page.py:17 Opening the URL - "status_codes"
+INFO     BASE_ELEMENT:base_element.py:114 Checking that response after click on base element "link with name 301" is "301"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "//a[text()="301"]" for base element at index 0
+INFO     BASE_ELEMENT:base_element.py:44 Clicking base element with name "link with name 301"

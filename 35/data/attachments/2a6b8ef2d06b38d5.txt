@@ -1,0 +1,15 @@
+INFO     BASE_PAGE:base_page.py:17 Opening the URL - "login"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "input#username" for input at index 0
+INFO     INPUT:input.py:21 Filling input "username" with value tomsmith
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "input#username" for input at index 0
+INFO     INPUT:input.py:29 Checking that input "username" have the value "tomsmith"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "input#password" for input at index 0
+INFO     INPUT:input.py:21 Filling input "password" with value SuperSecretPassword!
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "input#password" for input at index 0
+INFO     INPUT:input.py:29 Checking that input "password" have the value "SuperSecretPassword!"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "button[type="submit"]" for button at index 0
+INFO     BASE_ELEMENT:base_element.py:44 Clicking button with name "login"
+INFO     BASE_PAGE:base_page.py:31 Checking that current url matches pattern ".*/secure"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "a.button" for button at index 0
+INFO     BASE_ELEMENT:base_element.py:44 Clicking button with name "logout"
+INFO     BASE_PAGE:base_page.py:31 Checking that current url matches pattern ".*/login"

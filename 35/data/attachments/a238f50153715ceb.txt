@@ -1,0 +1,11 @@
+INFO     BASE_PAGE:base_page.py:17 Opening the URL - "dropdown"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "select#dropdown" for dropdown at index 0
+INFO     DROPDOWN:dropdown.py:21 Selecting option with value "1" in dropdown with name "Options"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "select#dropdown" for dropdown at index 0
+INFO     DROPDOWN:dropdown.py:29 Checking that dropdown "Options" have the value "1"
+INFO     DROPDOWN:dropdown.py:36 Checking that dropdown "Options" have "3" options
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "select#dropdown" for dropdown at index 0
+INFO     DROPDOWN:dropdown.py:43 Checking that dropdown "Options" have texts ['Please select an option', 'Option 1', 'Option 2']
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "select#dropdown" for dropdown at index 0
+INFO     DROPDOWN:dropdown.py:51 Checking dropdown "Options" for duplicates
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "select#dropdown" for dropdown at index 0

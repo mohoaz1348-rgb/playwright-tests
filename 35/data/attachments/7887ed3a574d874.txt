@@ -1,0 +1,12 @@
+INFO     BASE_PAGE:base_page.py:17 Opening the URL - "jqueryui/menu"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "//li[@class="ui-menu-item"]//a[text()="Enabled"]" for download link at index 0
+INFO     BASE_ELEMENT:base_element.py:52 Hover download link with name "some item"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "//li[@class="ui-menu-item"]//a[text()="Downloads"]" for download link at index 0
+INFO     BASE_ELEMENT:base_element.py:60 Checking that download link "some item" is visible
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "//li[@class="ui-menu-item"]//a[text()="Downloads"]" for download link at index 0
+INFO     BASE_ELEMENT:base_element.py:52 Hover download link with name "some item"
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "//li[@class="ui-menu-item"]//a[text()="PDF"]" for download link at index 0
+INFO     BASE_ELEMENT:base_element.py:60 Checking that download link "some item" is visible
+INFO     DOWNLOAD LINK:download_link.py:23 Downloading file ...
+INFO     BASE_ELEMENT:base_element.py:28 Getting locator with "//li[@class="ui-menu-item"]//a[text()="PDF"]" for download link at index 0
+INFO     BASE_ELEMENT:base_element.py:44 Clicking download link with name "some item"
