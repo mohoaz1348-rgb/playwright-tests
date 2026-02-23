@@ -114,6 +114,7 @@ def test_download_link(base_page: BasePage):
     dl_link.download()
 
 
+@pytest.mark.debug
 @allure.title("upload")
 def test_upload(base_page: BasePage):
     base_page.visit("upload")
@@ -123,7 +124,6 @@ def test_upload(base_page: BasePage):
     BaseElement(base_page.page, "div#uploaded-files", "Uploaded Files").check_visible()
 
 
-@pytest.mark.debug
 @allure.title("slider")
 def test_slider(base_page: BasePage):
     base_page.visit("horizontal_slider")
