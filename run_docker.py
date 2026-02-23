@@ -34,7 +34,7 @@ def run_tests():
     command = (
         f"docker run -u $(id -u):$(id -g) "
         f"-v {current_dir}/results:/app/results:rw "
-        f"--rm playwright-uv:latest uv run pytest {' '.join(args)}"
+        f"--rm playwright-uv:latest uv run pytest -o cache_dir=results/.pytest_cache {' '.join(args)}"
     )
 
     print("Запуск тестов в Docker...")
